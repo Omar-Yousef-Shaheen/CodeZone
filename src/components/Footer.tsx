@@ -1,5 +1,6 @@
 import { profile } from "../data/profile";
 import { ContactIcon } from "./Icon";
+import Logo from "./Logo";
 
 const footerLinks = [
   { label: "Home", href: "#home" },
@@ -23,8 +24,7 @@ export default function Footer() {
         <div className="grid gap-9 md:grid-cols-[1.25fr_1fr_1fr]">
           <div>
             <a href="#home" className="logo-lockup" aria-label={`${profile.brandName} home`}>
-              <span className="logo-mark">CZ</span>
-              <span className="logo-text">CodeWithCZ</span>
+              <Logo className="site-logo-footer" />
             </a>
             <p className="mt-4 max-w-sm text-sm leading-7 text-ink">
               Building modern, fast, and useful websites for brands that need a stronger digital presence.

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { profile } from "../data/profile";
+import Logo from "./Logo";
 import { Menu, X } from "lucide-react";
 
 const navItems = [
@@ -18,8 +19,7 @@ export default function Navbar() {
     <header className="sticky top-4 z-50 px-4">
       <nav className="glass-panel mx-auto flex max-w-[1240px] items-center justify-between rounded-lg px-4 py-2.5 md:px-5" aria-label="Primary">
         <a href="#home" className="logo-lockup" aria-label={`${profile.brandName} home`}>
-          <span className="logo-mark">CZ</span>
-          <span className="logo-text">CodeWithCZ</span>
+          <Logo />
         </a>
 
         <button
