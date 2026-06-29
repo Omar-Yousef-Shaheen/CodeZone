@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 64" role="img" aria-label="CodezWeb">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#007A78"/>
+      <stop offset="1" stop-color="#00B8C4"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="10" width="44" height="44" rx="12" fill="#E8F8F5"/>
+  <path d="M31.5 22.5h-9.4c-5.8 0-10.1 4.1-10.1 9.5s4.3 9.5 10.1 9.5h9.4" fill="none" stroke="url(#g)" stroke-width="5" stroke-linecap="round"/>
+  <path d="M30 24h18L34 40h16" fill="none" stroke="url(#g)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="58" y="33" font-family="Manrope, Arial, sans-serif" font-weight="800" font-size="19" fill="#0f172a">Codez</text>
+  <text x="119" y="33" font-family="Manrope, Arial, sans-serif" font-weight="800" font-size="19" fill="#007A78">Web</text>
+  <text x="60" y="47" font-family="Manrope, Arial, sans-serif" font-weight="600" font-size="7" letter-spacing="2.2" fill="#64748b">WEBSITES THAT CONVERT</text>
+</svg>
