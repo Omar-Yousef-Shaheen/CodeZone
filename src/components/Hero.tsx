@@ -1,4 +1,4 @@
-import { ArrowRight, CheckCircle2, MessageCircle } from "lucide-react";
+import { ArrowRight, MessageCircle } from "lucide-react";
 import { SkillIcon } from "./Icon";
 import { projects } from "../data/projects";
 import { profile } from "../data/profile";
