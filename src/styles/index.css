@@ -230,11 +230,14 @@ body::before {
   }
 
   .stat-card {
-    @apply rounded-lg p-4 text-left;
-    background: #ffffff;
-    border: 1px solid var(--line);
-    box-shadow: var(--shadow-soft);
+    @apply rounded-lg p-0 text-center md:p-4;
   }
+
+  .stat-card dt {
+    color: #005B5F;
+  }
+
+
 
   .work-showcase {
     @apply overflow-hidden rounded-lg;

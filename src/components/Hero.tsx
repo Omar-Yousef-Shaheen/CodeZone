@@ -39,7 +39,7 @@ export default function Hero() {
             ))}
           </div>
 
-          <dl className="mx-auto mt-9 grid max-w-xl grid-cols-3 gap-3 md:mx-0">
+          <dl className="mx-auto mt-9 grid max-w-xl grid-cols-3 gap-3 md:mx-0 md:gap-0">
             {stats.map((item) => (
               <div key={item.label} className="stat-card">
                 <dt className="text-2xl font-semibold leading-none text-navy md:text-[30px]">{item.value}</dt>
