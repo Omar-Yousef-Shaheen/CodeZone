@@ -1,34 +1,26 @@
-import SectionTitle from "./SectionTitle";
-import { ProcessIcon } from "./Icon";
 import { processSteps } from "../data/process";
+import { ProcessIcon } from "./Icon";
+import SectionTitle from "./SectionTitle";
 
 export default function Process() {
   return (
-    <section id="process" className="section py-12 md:py-16">
-      <div className="mx-auto max-w-[1180px] px-4 sm:px-6 md:px-8">
+    <section id="process" className="section process-section">
+      <div className="shell">
         <SectionTitle
           eyebrow="Process"
-          title="A clear path from brief to launch"
-          description="A practical workflow for shaping the right structure, building clean pages, and preparing the site for real users."
+          title="A clear workflow from first conversation to launch."
+          description="A practical four-stage process that works for direct clients, e-commerce brands, and agency collaboration."
         />
-        <div className="grid gap-5 md:grid-cols-4 md:gap-6">
+        <ol className="process-grid">
           {processSteps.map((step) => (
-            <div key={step.number} className="relative">
-              <article className="process-card h-full">
-                <div className="mb-6 flex items-start gap-4">
-                  <span className="icon-orb size-12">
-                    <ProcessIcon name={step.icon} className="size-5" />
-                  </span>
-                  <div>
-                    <span className="text-sm font-semibold text-muted">{step.number}</span>
-                    <h3 className="mt-1 text-lg font-bold text-navy">{step.title}</h3>
-                  </div>
-                </div>
-                <p className="text-sm leading-7 text-ink">{step.description}</p>
-              </article>
-            </div>
+            <li key={step.number} className="process-card">
+              <span className="process-number">{step.number}</span>
+              <span className="process-icon"><ProcessIcon name={step.icon} /></span>
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   );

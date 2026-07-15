@@ -1,64 +1,96 @@
-import { useState } from "react";
+import { Menu, MessageCircle, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { profile } from "../data/profile";
 import Logo from "./Logo";
-import { Menu, X } from "lucide-react";
 
 const navItems = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
-  { label: "Process", href: "#process" },
-  { label: "Services", href: "#services" },
+  { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
+  { label: "Services", href: "#services" },
+  { label: "Process", href: "#process" },
   { label: "Contact", href: "#contact" },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const firstMobileLinkRef = useRef<HTMLAnchorElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    firstMobileLinkRef.current?.focus();
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [open]);
 
   return (
-    <header className="sticky top-4 z-50 px-4">
-      <nav className="glass-panel mx-auto flex max-w-[1240px] items-center justify-between rounded-lg px-4 py-2.5 md:px-5" aria-label="Primary">
-        <a href="#home" className="logo-lockup" aria-label={`${profile.brandName} home`}>
+    <header className="site-header">
+      <nav className="nav-shell" aria-label="Primary navigation">
+        <a href="#home" className="logo-lockup" aria-label="Omar Yousef - home">
           <Logo />
         </a>
 
         <button
-          className="inline-grid size-10 place-items-center rounded-lg border border-line bg-white text-navy shadow-card md:hidden"
+          ref={menuButtonRef}
+          className="menu-button"
           type="button"
           aria-expanded={open}
           aria-controls="mobile-menu"
+          aria-label={open ? "Close navigation menu" : "Open navigation menu"}
           onClick={() => setOpen((value) => !value)}
         >
-          <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
-          {open ? <X className="size-5" /> : <Menu className="size-5" />}
+          {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
         </button>
 
-        <div className="hidden items-center gap-2 md:flex">
-          {navItems.map((item, index) => (
-            <a key={item.href} className={`nav-link ${index === 0 ? "nav-link-active" : ""}`} href={item.href}>
+        <div className="desktop-nav">
+          {navItems.map((item) => (
+            <a key={item.href} className="nav-link" href={item.href}>
               {item.label}
             </a>
           ))}
-          <a className="btn btn-small btn-primary ml-2" href="#contact">
-            Let's Talk
+          <a className="btn btn-small btn-primary nav-cta" href={profile.whatsappUrl} target="_blank" rel="noopener noreferrer">
+            <MessageCircle aria-hidden="true" />
+            WhatsApp Me
           </a>
         </div>
       </nav>
 
-      {open ? (
-        <div id="mobile-menu" className="glass-panel mx-auto mt-2 max-w-[1240px] rounded-lg px-5 py-4 md:hidden">
-          <div className="mx-auto flex max-w-[1240px] flex-col gap-3">
-            {navItems.map((item) => (
-              <a key={item.href} className="nav-link py-2" href={item.href} onClick={() => setOpen(false)}>
-                {item.label}
-              </a>
-            ))}
-            <a className="btn btn-primary mt-2 justify-center" href="#contact" onClick={() => setOpen(false)}>
-              Let's Talk
+      <div id="mobile-menu" className={`mobile-menu ${open ? "is-open" : ""}`} aria-hidden={!open}>
+        <div className="mobile-menu-inner">
+          {navItems.map((item, index) => (
+            <a
+              key={item.href}
+              ref={index === 0 ? firstMobileLinkRef : undefined}
+              className="mobile-nav-link"
+              href={item.href}
+              tabIndex={open ? 0 : -1}
+              onClick={() => setOpen(false)}
+            >
+              {item.label}
             </a>
-          </div>
+          ))}
+          <a
+            className="btn btn-primary mobile-whatsapp"
+            href={profile.whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            tabIndex={open ? 0 : -1}
+          >
+            <MessageCircle aria-hidden="true" />
+            WhatsApp Me
+          </a>
         </div>
-      ) : null}
+      </div>
     </header>
   );
 }

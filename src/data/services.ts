@@ -1,27 +1,38 @@
 export const services = [
   {
-    title: "WordPress Websites",
-    kicker: "Built for performance",
+    title: "WordPress & WooCommerce",
     description:
-      "Responsive WordPress websites with Elementor, Elementor Pro, clean layouts, SEO basics, and performance-minded structure.",
-    tags: ["WordPress", "Elementor", "SEO Basics"],
+      "Responsive business websites and online stores built or improved with WordPress, WooCommerce, Elementor, and Elementor Pro.",
+    tags: ["WordPress", "WooCommerce", "Elementor Pro"],
     icon: "wordpress",
   },
   {
-    title: "eCommerce Stores",
-    kicker: "Designed to sell",
+    title: "Shopify",
     description:
-      "WooCommerce and Shopify storefront work focused on responsive pages, clearer journeys, and stronger user experience.",
-    tags: ["WooCommerce", "Shopify", "Responsive UI"],
+      "Shopify storefront implementation and improvements with organized collections, clear product pages, and mobile-ready shopping flows.",
+    tags: ["Shopify", "Storefronts", "Responsive UI"],
     icon: "store",
   },
   {
     title: "Frontend Development",
-    kicker: "Clean custom code",
     description:
-      "Frontend layouts using HTML, CSS, JavaScript, Bootstrap, Tailwind CSS, and React.js basics for polished static experiences.",
-    tags: ["HTML", "CSS", "JavaScript"],
+      "Clean, responsive interfaces implemented with HTML, CSS, JavaScript, and React for marketing, business, and e-commerce pages.",
+    tags: ["HTML5", "CSS3", "JavaScript"],
     icon: "code",
+  },
+  {
+    title: "Website Speed Optimization",
+    description:
+      "Practical performance work covering asset delivery, page weight, layout stability, and front-end cleanup for smoother websites.",
+    tags: ["Performance", "Core UX", "Asset Cleanup"],
+    icon: "speed",
+  },
+  {
+    title: "Website Redesign & UI Improvements",
+    description:
+      "Focused redesigns that improve hierarchy, readability, responsive behavior, and the clarity of important user journeys.",
+    tags: ["Redesign", "Responsive UI", "Usability"],
+    icon: "redesign",
   },
 ];
 

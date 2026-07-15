@@ -3,25 +3,25 @@ export const processSteps = [
     number: "01",
     title: "Discovery",
     icon: "search",
-    description: "Understand goals, audience, website needs, and project requirements before shaping the solution.",
+    description: "Clarify the audience, goals, content, current challenges, and the scope needed for the project.",
   },
   {
     number: "02",
     title: "Design",
     icon: "pen",
-    description: "Create a clear, modern layout focused on responsive usability, clarity, and conversion.",
+    description: "Shape the page structure and visual direction around clear content, usability, and brand consistency.",
   },
   {
     number: "03",
     title: "Development",
     icon: "code",
-    description: "Build the website with WordPress, Elementor, Shopify, or frontend code based on the project scope.",
+    description: "Build responsive pages in WordPress, WooCommerce, Shopify, or frontend code, based on the agreed scope.",
   },
   {
     number: "04",
     title: "Launch",
     icon: "rocket",
-    description: "Test responsiveness, improve performance, and prepare the site for publishing online.",
+    description: "Review key pages, devices, links, and performance before publishing or handing the work back to your team.",
   },
 ];
 

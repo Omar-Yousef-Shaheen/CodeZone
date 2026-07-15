@@ -1,38 +1,28 @@
-import SectionTitle from "./SectionTitle";
+import { BriefcaseBusiness } from "lucide-react";
 import { experience } from "../data/experience";
+import SectionTitle from "./SectionTitle";
 
 export default function Experience() {
   return (
-    <section id="experience" className="section bg-frost">
-      <div className="mx-auto max-w-[1240px] px-4 sm:px-6 md:px-8">
+    <section id="experience" className="section section-tint">
+      <div className="shell">
         <SectionTitle
           eyebrow="Experience"
-          title="Website delivery, optimization, and client-focused improvements."
-          description="The timeline preserves the CV's employers, dates, and responsibilities without adding unsupported claims."
+          title="Hands-on website work across teams and client projects."
+          description="A concise view of my WordPress, WooCommerce, Shopify, responsive implementation, and website improvement experience."
         />
-        <div className="mx-auto max-w-4xl">
+        <div className="experience-grid">
           {experience.map((item) => (
-            <article key={`${item.company}-${item.date}`} className="timeline-item">
-              <div className="timeline-dot" aria-hidden="true" />
-              <div className="panel p-6 md:p-7">
-                <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-                  <div>
-                    <h3 className="text-2xl font-bold text-navy">{item.company}</h3>
-                    <p className="mt-1 font-medium text-royal">{item.title}</p>
-                  </div>
-                  <p className="rounded-lg border border-line bg-white px-3 py-1 text-sm text-muted">
-                    {item.date}
-                  </p>
-                </div>
-                <ul className="mt-5 space-y-3 text-ink">
-                  {item.bullets.map((bullet) => (
-                    <li key={bullet} className="flex gap-3 leading-7">
-                      <span className="mt-3 size-1.5 shrink-0 rounded-full bg-royal" aria-hidden="true" />
-                      <span>{bullet}</span>
-                    </li>
-                  ))}
-                </ul>
+            <article key={`${item.company}-${item.date}`} className="experience-card">
+              <div className="experience-topline">
+                <span className="experience-icon"><BriefcaseBusiness aria-hidden="true" /></span>
+                <span className="experience-date">{item.date}</span>
               </div>
+              <h3>{item.company}</h3>
+              <p className="experience-title">{item.title}</p>
+              <ul>
+                {item.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
+              </ul>
             </article>
           ))}
         </div>

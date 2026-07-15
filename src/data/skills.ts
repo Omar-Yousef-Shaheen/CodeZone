@@ -20,7 +20,7 @@ export const coreSkills = [
   { name: "JavaScript", label: "85%", level: 85, icon: "javascript" },
   { name: "Shopify", label: "90%", level: 90, icon: "shopify" },
   { name: "WooCommerce", label: "90%", level: 90, icon: "woocommerce" },
-  { name: "Tailwind CSS", label: "85%", level: 85, icon: "tailwind" },
+  { name: "Elementor Pro", label: "90%", level: 90, icon: "elementor" },
 ];
 
 export type SkillGroup = (typeof skillGroups)[number];

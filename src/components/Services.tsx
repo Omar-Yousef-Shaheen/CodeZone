@@ -1,34 +1,29 @@
 import { ArrowRight } from "lucide-react";
-import SectionTitle from "./SectionTitle";
-import { ServiceIcon } from "./Icon";
 import { services } from "../data/services";
-
-const iconColors: Record<string, string> = {
-  wordpress: "text-[#00b8c4]",
-  store: "text-[#22c55e]",
-  code: "text-[#101828]",
-};
+import { ServiceIcon } from "./Icon";
+import SectionTitle from "./SectionTitle";
 
 export default function Services() {
   return (
-    <section id="services" className="section py-12 md:py-16">
-      <div className="mx-auto max-w-[1180px] px-4 sm:px-6 md:px-8">
+    <section id="services" className="section section-tint">
+      <div className="shell">
         <SectionTitle
           eyebrow="Services"
-          title="Build, improve, and launch your website"
-          description="Focused services for business websites, online stores, and custom front-end pages."
+          title="Focused website services from build to improvement."
+          description="Practical delivery for business websites, online stores, responsive interfaces, and existing sites that need attention."
         />
-        <div className="grid gap-5 md:grid-cols-3">
-          {services.map((service) => (
-            <article key={service.title} className="service-card">
-              <span className="icon-orb mb-6">
-                <ServiceIcon name={service.icon} className={`size-7 ${iconColors[service.icon] ?? "text-[#101828]"}`} />
-              </span>
-              <h3 className="text-xl font-bold text-navy">{service.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-ink">{service.description}</p>
-              <a className="text-link mt-6" href="#contact">
-                Learn More
-                <ArrowRight className="size-4" />
+        <div className="service-grid">
+          {services.map((service, index) => (
+            <article key={service.title} className={`service-card service-card-${index + 1}`}>
+              <span className="service-number">0{index + 1}</span>
+              <span className="service-icon"><ServiceIcon name={service.icon} /></span>
+              <h3>{service.title}</h3>
+              <p>{service.description}</p>
+              <div className="service-tags">
+                {service.tags.map((tag) => <span key={tag}>{tag}</span>)}
+              </div>
+              <a href="#contact" className="text-link">
+                Discuss this service <ArrowRight aria-hidden="true" />
               </a>
             </article>
           ))}
