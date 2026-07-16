@@ -3,6 +3,12 @@ import type { Project } from "../data/projects";
 import { PlatformIcon } from "./Icon";
 
 export default function ProjectCard({ project }: { project: Project }) {
+  const platformLabel = project.platform === "Shopify"
+    ? "Shopify"
+    : project.siteType === "Portfolio Website"
+      ? "WordPress"
+      : "WordPress / WooCommerce";
+
   return (
     <article className="project-card">
       <div className="project-thumb">
@@ -17,7 +23,7 @@ export default function ProjectCard({ project }: { project: Project }) {
       </div>
       <div className="project-content">
         <div className="project-badges">
-          <span className="platform-badge"><PlatformIcon platform={project.platform} />{project.platform}</span>
+          <span className="platform-badge"><PlatformIcon platform={project.platform} />{platformLabel}</span>
           <span className="role-badge">{project.role}</span>
         </div>
         <h3>{project.title}</h3>

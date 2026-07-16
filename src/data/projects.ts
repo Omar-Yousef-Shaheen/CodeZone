@@ -5,6 +5,7 @@ const projectImages = import.meta.glob("../assets/images/project-thumbnails/*.jp
 
 export type ProjectPlatform = "WordPress / WooCommerce" | "Shopify";
 export type ProjectRole = "Full Build" | "Development & Improvements";
+export type ProjectSiteType = "Ecommerce" | "Portfolio Website";
 export type ProjectSource =
   | "Direct Freelance Project"
   | "Built while working with Trendscape Agency"
@@ -16,12 +17,14 @@ export type Project = {
   image: string;
   liveDemoUrl: string;
   platform: ProjectPlatform;
+  siteType: ProjectSiteType;
   role: ProjectRole;
   source: ProjectSource;
 };
 
-type ProjectSeed = Omit<Project, "image" | "role" | "source"> & {
+type ProjectSeed = Omit<Project, "image" | "role" | "source" | "siteType"> & {
   imageFile: string;
+  siteType?: ProjectSiteType;
 };
 
 const imageFor = (fileName: string) => {
@@ -333,6 +336,7 @@ const projectSeeds: ProjectSeed[] = [
     imageFile: "squaresdev-com.png",
     liveDemoUrl: "https://squaresdev.com",
     platform: "WordPress / WooCommerce",
+    siteType: "Portfolio Website",
   },
   {
     title: "Tactful AI",
@@ -340,6 +344,7 @@ const projectSeeds: ProjectSeed[] = [
     imageFile: "tactful-ai.png",
     liveDemoUrl: "https://tactful.ai",
     platform: "WordPress / WooCommerce",
+    siteType: "Portfolio Website",
   },
   {
     title: "Rescape Visualization",
@@ -347,6 +352,7 @@ const projectSeeds: ProjectSeed[] = [
     imageFile: "rescape-visualization-com.png",
     liveDemoUrl: "https://rescape-visualization.com",
     platform: "WordPress / WooCommerce",
+    siteType: "Portfolio Website",
   },
   {
     title: "Debo Photography",
@@ -354,6 +360,7 @@ const projectSeeds: ProjectSeed[] = [
     imageFile: "debophotography-com.png",
     liveDemoUrl: "https://debophotography.com",
     platform: "WordPress / WooCommerce",
+    siteType: "Portfolio Website",
   },
   {
     title: "Eagle Architects",
@@ -361,6 +368,7 @@ const projectSeeds: ProjectSeed[] = [
     imageFile: "eagle-architectss-com.png",
     liveDemoUrl: "https://eagle-architectss.com",
     platform: "WordPress / WooCommerce",
+    siteType: "Portfolio Website",
   },
   {
     title: "Explore Cars Rental",
@@ -368,6 +376,7 @@ const projectSeeds: ProjectSeed[] = [
     imageFile: "explorecarsrental-com.png",
     liveDemoUrl: "https://explorecarsrental.com",
     platform: "WordPress / WooCommerce",
+    siteType: "Portfolio Website",
   },
   {
     title: "Harmony By Aya",
@@ -375,6 +384,7 @@ const projectSeeds: ProjectSeed[] = [
     imageFile: "harmonybyaya-com.png",
     liveDemoUrl: "https://harmonybyaya.com",
     platform: "WordPress / WooCommerce",
+    siteType: "Portfolio Website",
   },
   {
     title: "Hossam Antikka",
@@ -382,6 +392,7 @@ const projectSeeds: ProjectSeed[] = [
     imageFile: "hossam-antikka-com.png",
     liveDemoUrl: "https://hossam-antikka.com",
     platform: "WordPress / WooCommerce",
+    siteType: "Portfolio Website",
   },
   {
     title: "JD Express EG",
@@ -389,6 +400,7 @@ const projectSeeds: ProjectSeed[] = [
     imageFile: "jdexpress-eg-com.png",
     liveDemoUrl: "https://jdexpress-eg.com",
     platform: "WordPress / WooCommerce",
+    siteType: "Portfolio Website",
   },
   {
     title: "Loc & More",
@@ -396,6 +408,7 @@ const projectSeeds: ProjectSeed[] = [
     imageFile: "locandmore-com.png",
     liveDemoUrl: "https://locandmore.com",
     platform: "WordPress / WooCommerce",
+    siteType: "Portfolio Website",
   },
   {
     title: "Loc & Play",
@@ -403,6 +416,7 @@ const projectSeeds: ProjectSeed[] = [
     imageFile: "locandplay-com.png",
     liveDemoUrl: "https://locandplay.com",
     platform: "WordPress / WooCommerce",
+    siteType: "Portfolio Website",
   },
   {
     title: "Palmeras Hotel",
@@ -410,6 +424,7 @@ const projectSeeds: ProjectSeed[] = [
     imageFile: "palmeras-hotel-com.png",
     liveDemoUrl: "https://palmeras-hotel.com",
     platform: "WordPress / WooCommerce",
+    siteType: "Portfolio Website",
   },
   {
     title: "Tawasol 365",
@@ -417,6 +432,7 @@ const projectSeeds: ProjectSeed[] = [
     imageFile: "tawasol365-com.png",
     liveDemoUrl: "https://tawasol365.com",
     platform: "WordPress / WooCommerce",
+    siteType: "Portfolio Website",
   },
   {
     title: "Trendscape Agency",
@@ -424,6 +440,7 @@ const projectSeeds: ProjectSeed[] = [
     imageFile: "trendscape-agency-com.png",
     liveDemoUrl: "https://trendscape-agency.com",
     platform: "WordPress / WooCommerce",
+    siteType: "Portfolio Website",
   },
   {
     title: "Trendscape Studio",
@@ -431,6 +448,7 @@ const projectSeeds: ProjectSeed[] = [
     imageFile: "trendscapestudio-com.png",
     liveDemoUrl: "https://trendscapestudio.com",
     platform: "WordPress / WooCommerce",
+    siteType: "Portfolio Website",
   },
   {
     title: "Ventures Business Academy",
@@ -438,6 +456,7 @@ const projectSeeds: ProjectSeed[] = [
     imageFile: "venturesbusinessacademy-com.png",
     liveDemoUrl: "https://venturesbusinessacademy.com",
     platform: "WordPress / WooCommerce",
+    siteType: "Portfolio Website",
   },
   {
     title: "VTR Fitout",
@@ -445,12 +464,14 @@ const projectSeeds: ProjectSeed[] = [
     imageFile: "vtrfitout-com.png",
     liveDemoUrl: "https://vtrfitout.com",
     platform: "WordPress / WooCommerce",
+    siteType: "Portfolio Website",
   },
 ];
 
 export const projects: Project[] = projectSeeds.map((project) => ({
   ...project,
   image: imageFor(project.imageFile),
+  siteType: project.siteType ?? "Ecommerce",
   role: improvementProjects.has(project.title) ? "Development & Improvements" : "Full Build",
   source: directFreelanceProjects.has(project.title)
     ? "Direct Freelance Project"

@@ -1,4 +1,6 @@
-import { ArrowRight, Check, Download, MessageCircle } from "lucide-react";
+import { ArrowRight, Download, MessageCircle } from "lucide-react";
+import heroDeveloperDesktop from "../assets/images/hero-developer-1000.webp";
+import heroDeveloperMobile from "../assets/images/hero-developer-600.webp";
 import { profile } from "../data/profile";
 
 const stats = [
@@ -43,50 +45,19 @@ export default function Hero() {
           </dl>
         </div>
 
-        <div className="browser-visual" aria-label="Responsive website development interface illustration" role="img">
-          <div className="browser-bar">
-            <span className="browser-dots" aria-hidden="true"><i /><i /><i /></span>
-            <span className="browser-address">omaryousef.dev / build</span>
-            <span className="browser-status"><i /> Live preview</span>
-          </div>
-          <div className="browser-body">
-            <aside className="visual-sidebar" aria-hidden="true">
-              <span className="visual-logo">OY</span>
-              <span className="visual-nav active" />
-              <span className="visual-nav" />
-              <span className="visual-nav" />
-            </aside>
-            <div className="visual-workspace">
-              <div className="visual-heading-row">
-                <div>
-                  <span className="visual-kicker">CURRENT BUILD</span>
-                  <strong>Commerce interface</strong>
-                </div>
-                <span className="visual-responsive">320 <i /> 768 <i /> 1440</span>
-              </div>
-              <div className="visual-canvas">
-                <div className="visual-preview">
-                  <span className="preview-tag">Responsive storefront</span>
-                  <strong>Clear structure.<br />Fast interaction.</strong>
-                  <div className="preview-buttons"><i /><i /></div>
-                  <div className="preview-cards"><i /><i /><i /></div>
-                </div>
-                <div className="visual-code" aria-label="Example CSS for a responsive product grid">
-                  <span><b>.product-grid</b> {'{'}</span>
-                  <span>&nbsp;&nbsp;display: grid;</span>
-                  <span>&nbsp;&nbsp;gap: 1.5rem;</span>
-                  <span>&nbsp;&nbsp;grid-template-columns:</span>
-                  <span>&nbsp;&nbsp;&nbsp;&nbsp;repeat(auto-fit, minmax(16rem, 1fr));</span>
-                  <span>{'}'}</span>
-                </div>
-              </div>
-              <div className="visual-metrics">
-                <span><Check aria-hidden="true" /> Responsive layout</span>
-                <span><Check aria-hidden="true" /> Accessible controls</span>
-                <span><Check aria-hidden="true" /> Optimized assets</span>
-              </div>
-            </div>
-          </div>
+        <div className="hero-illustration">
+          <picture>
+            <source media="(max-width: 767px)" srcSet={heroDeveloperMobile} />
+            <img
+              src={heroDeveloperDesktop}
+              srcSet={`${heroDeveloperMobile} 600w, ${heroDeveloperDesktop} 1000w`}
+              sizes="(max-width: 767px) 290px, (max-width: 1023px) 380px, 540px"
+              width="1000"
+              height="1000"
+              alt="3D illustration of a frontend and WordPress developer working on a laptop"
+              decoding="async"
+            />
+          </picture>
         </div>
       </div>
     </section>

@@ -1,6 +1,10 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { KeyboardEvent as ReactKeyboardEvent } from "react";
+import type {
+  KeyboardEvent as ReactKeyboardEvent,
+  MouseEvent as ReactMouseEvent,
+  PointerEvent as ReactPointerEvent,
+} from "react";
 import { projects } from "../data/projects";
 import ProjectCard from "./ProjectCard";
 import SectionTitle from "./SectionTitle";
@@ -9,16 +13,26 @@ const filters = [
   "All",
   "WordPress/WooCommerce",
   "Shopify",
+  "Portfolio Websites",
   "Full Build",
   "Development & Improvements",
 ] as const;
 
 type ProjectFilter = (typeof filters)[number];
 
+type DragState = {
+  pointerId: number;
+  startX: number;
+  startY: number;
+  startScrollLeft: number;
+  startPage: number;
+  axis: "pending" | "horizontal" | "vertical";
+};
+
 const getProjectsPerPage = () => {
-  if (typeof window === "undefined") return 6;
-  if (window.matchMedia("(min-width: 1024px)").matches) return 6;
-  if (window.matchMedia("(min-width: 768px)").matches) return 4;
+  if (typeof window === "undefined") return 3;
+  if (window.matchMedia("(min-width: 1024px)").matches) return 3;
+  if (window.matchMedia("(min-width: 768px)").matches) return 2;
   return 1;
 };
 
@@ -28,6 +42,9 @@ export default function Projects() {
   const [currentPage, setCurrentPage] = useState(0);
   const trackRef = useRef<HTMLDivElement>(null);
   const pageRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const filterRefs = useRef<Partial<Record<ProjectFilter, HTMLButtonElement | null>>>({});
+  const dragStateRef = useRef<DragState | null>(null);
+  const suppressClickRef = useRef(false);
 
   const filteredProjects = useMemo(() => {
     switch (activeFilter) {
@@ -35,6 +52,8 @@ export default function Projects() {
         return projects.filter((project) => project.platform === "WordPress / WooCommerce");
       case "Shopify":
         return projects.filter((project) => project.platform === "Shopify");
+      case "Portfolio Websites":
+        return projects.filter((project) => project.siteType === "Portfolio Website");
       case "Full Build":
         return projects.filter((project) => project.role === "Full Build");
       case "Development & Improvements":
@@ -132,10 +151,93 @@ export default function Projects() {
     scrollToPage(Math.max(0, Math.min(targetPage, projectPages.length - 1)), behavior);
   };
 
+  const handleFilterChange = (filter: ProjectFilter) => {
+    setCurrentPage(0);
+    setActiveFilter(filter);
+
+    if (!window.matchMedia("(max-width: 767px)").matches) return;
+    window.requestAnimationFrame(() => {
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      filterRefs.current[filter]?.scrollIntoView({
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+        block: "nearest",
+        inline: "center",
+      });
+    });
+  };
+
+  const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.button !== 0 || projectPages.length < 2) return;
+    dragStateRef.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      startScrollLeft: event.currentTarget.scrollLeft,
+      startPage: currentPage,
+      axis: "pending",
+    };
+  };
+
+  const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const dragState = dragStateRef.current;
+    if (!dragState || dragState.pointerId !== event.pointerId || dragState.axis === "vertical") return;
+
+    const deltaX = event.clientX - dragState.startX;
+    const deltaY = event.clientY - dragState.startY;
+    if (dragState.axis === "pending") {
+      if (Math.max(Math.abs(deltaX), Math.abs(deltaY)) < 8) return;
+      if (Math.abs(deltaY) > Math.abs(deltaX)) {
+        dragState.axis = "vertical";
+        return;
+      }
+      dragState.axis = "horizontal";
+      event.currentTarget.setPointerCapture(event.pointerId);
+      event.currentTarget.classList.add("is-dragging");
+    }
+
+    event.preventDefault();
+    const isRtl = window.getComputedStyle(event.currentTarget).direction === "rtl";
+    event.currentTarget.scrollLeft = dragState.startScrollLeft - deltaX * (isRtl ? -1 : 1);
+  };
+
+  const finishPointerDrag = (event: ReactPointerEvent<HTMLDivElement>, cancelled = false) => {
+    const dragState = dragStateRef.current;
+    if (!dragState || dragState.pointerId !== event.pointerId) return;
+
+    event.currentTarget.classList.remove("is-dragging");
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+
+    if (dragState.axis === "horizontal") {
+      const deltaX = event.clientX - dragState.startX;
+      const isRtl = window.getComputedStyle(event.currentTarget).direction === "rtl";
+      const movedTowardNext = isRtl ? deltaX > 0 : deltaX < 0;
+      const pageDelta = cancelled || Math.abs(deltaX) < 32 ? 0 : movedTowardNext ? 1 : -1;
+      const targetPage = Math.max(0, Math.min(dragState.startPage + pageDelta, projectPages.length - 1));
+      suppressClickRef.current = true;
+      window.setTimeout(() => {
+        suppressClickRef.current = false;
+      }, 0);
+      scrollToPage(targetPage);
+    }
+
+    dragStateRef.current = null;
+  };
+
+  const handleClickCapture = (event: ReactMouseEvent<HTMLDivElement>) => {
+    if (!suppressClickRef.current) return;
+    event.preventDefault();
+    event.stopPropagation();
+  };
+
   const visibleStart = filteredProjects.length === 0 ? 0 : currentPage * projectsPerPage + 1;
   const visibleEnd = Math.min((currentPage + 1) * projectsPerPage, filteredProjects.length);
   const isAtStart = currentPage === 0;
   const isAtEnd = currentPage >= projectPages.length - 1;
+  const counterText = projectsPerPage === 1 || visibleStart === visibleEnd
+    ? `${visibleStart} of ${filteredProjects.length} projects`
+    : `${visibleStart}\u2013${visibleEnd} of ${filteredProjects.length} projects`;
 
   return (
     <section id="projects" className="section">
@@ -151,10 +253,13 @@ export default function Projects() {
             {filters.map((filter) => (
               <button
                 key={filter}
+                ref={(element) => {
+                  filterRefs.current[filter] = element;
+                }}
                 type="button"
                 className="filter-button"
                 aria-pressed={activeFilter === filter}
-                onClick={() => setActiveFilter(filter)}
+                onClick={() => handleFilterChange(filter)}
               >
                 {filter}
               </button>
@@ -163,7 +268,7 @@ export default function Projects() {
 
           <div className="project-carousel-status">
             <p className="project-result-count" aria-live="polite" aria-atomic="true">
-              {visibleStart}&ndash;{visibleEnd} of {filteredProjects.length} projects
+              {counterText}
             </p>
             <div className="project-carousel-controls" aria-label="Projects carousel controls">
               <button
@@ -192,6 +297,9 @@ export default function Projects() {
 
         {filteredProjects.length > 0 ? (
           <div className="project-carousel">
+            <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+              {activeFilter} filter selected. {filteredProjects.length} projects. Showing {counterText}.
+            </p>
             <div
               id="project-carousel-track"
               ref={trackRef}
@@ -201,6 +309,11 @@ export default function Projects() {
               aria-label={`${activeFilter} projects. Use the left and right arrow keys to navigate.`}
               tabIndex={0}
               onKeyDown={handleCarouselKeyDown}
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={(event) => finishPointerDrag(event)}
+              onPointerCancel={(event) => finishPointerDrag(event, true)}
+              onClickCapture={handleClickCapture}
             >
               {projectPages.map((page, pageIndex) => {
                 const pageStart = pageIndex * projectsPerPage + 1;
@@ -215,7 +328,11 @@ export default function Projects() {
                     className="project-carousel-page"
                     role="group"
                     aria-roledescription="slide"
-                    aria-label={`${pageStart}\u2013${pageEnd} of ${filteredProjects.length} projects`}
+                    aria-label={pageStart === pageEnd
+                      ? `Project ${pageStart} of ${filteredProjects.length}`
+                      : `Projects ${pageStart}\u2013${pageEnd} of ${filteredProjects.length}`}
+                    aria-hidden={pageIndex !== currentPage}
+                    inert={pageIndex !== currentPage}
                   >
                     {page.map((project) => (
                       <div className="project-carousel-item" key={project.title}>
