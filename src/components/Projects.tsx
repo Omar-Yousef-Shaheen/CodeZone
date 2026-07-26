@@ -49,15 +49,15 @@ export default function Projects() {
   const filteredProjects = useMemo(() => {
     switch (activeFilter) {
       case "WordPress/WooCommerce":
-        return projects.filter((project) => project.platform === "WordPress / WooCommerce");
+        return projects.filter((project) => project.category === "wordpress-woocommerce");
       case "Shopify":
-        return projects.filter((project) => project.platform === "Shopify");
+        return projects.filter((project) => project.category === "shopify");
       case "Portfolio Websites":
-        return projects.filter((project) => project.siteType === "Portfolio Website");
+        return projects.filter((project) => project.category === "portfolio");
       case "Full Build":
         return projects.filter((project) => project.role === "Full Build");
       case "Development & Improvements":
-        return projects.filter((project) => project.role === "Development & Improvements");
+        return projects.filter((project) => project.category === "development-improvements");
       default:
         return projects;
     }
@@ -245,7 +245,7 @@ export default function Projects() {
         <SectionTitle
           eyebrow="Projects"
           title="Websites built and improved across different industries."
-          description="Browse all 54 projects by platform or role. Every project remains available here on the same page."
+          description={`Browse all ${projects.length} projects by platform or role. Every project remains available here on the same page.`}
         />
 
         <div className="project-toolbar">
