@@ -17,3 +17,4 @@ Thumbs.db
 .cache/
 .chrome-cdp-qa/
 qa-*.png
+temp/
