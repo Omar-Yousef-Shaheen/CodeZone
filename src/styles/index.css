@@ -1083,60 +1083,6 @@ html[lang="ar"] .studio-hero-button {
   background: var(--teal-600);
 }
 
-/* Worked with */
-.worked-with {
-  padding-block: 42px;
-  border-block: 1px solid var(--line);
-  background: white;
-}
-
-.worked-with .shell {
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  align-items: center;
-  gap: 42px;
-}
-
-.worked-with-heading .mini-label {
-  margin-bottom: 4px;
-}
-
-.worked-with-heading h2 {
-  margin-bottom: 0;
-  font-size: 1.35rem;
-  font-weight: 600;
-}
-
-.logo-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.company-logo {
-  display: grid;
-  min-width: 0;
-  min-height: 92px;
-  place-items: center;
-  padding: 19px;
-  border: 1px solid var(--line);
-  border-radius: 13px;
-  background: #fbfdfd;
-  transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
-}
-
-.company-logo:hover {
-  border-color: rgba(0, 127, 125, 0.35);
-  background: white;
-  box-shadow: var(--shadow-sm);
-}
-
-.company-logo img {
-  width: 100%;
-  height: 48px;
-  object-fit: contain;
-}
-
 /* Experience */
 .experience-grid {
   display: grid;
@@ -2149,15 +2095,6 @@ html[lang="ar"] .studio-hero-button {
     padding: 25px;
   }
 
-  .worked-with .shell {
-    grid-template-columns: 150px 1fr;
-    gap: 26px;
-  }
-
-  .logo-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .project-carousel-page {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2277,11 +2214,6 @@ html[lang="ar"] .studio-hero-button {
     font-size: clamp(2rem, 8.5vw, 2.75rem);
   }
 
-  .worked-with .shell {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
   .experience-grid {
     grid-template-columns: 1fr;
   }
@@ -2374,20 +2306,6 @@ html[lang="ar"] .studio-hero-button {
     align-items: flex-start;
     flex-direction: column;
     gap: 5px;
-  }
-
-  .logo-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-
-  .company-logo {
-    min-height: 80px;
-    padding: 14px;
-  }
-
-  .company-logo img {
-    height: 38px;
   }
 
   .experience-card,
@@ -2508,7 +2426,6 @@ html[lang="ar"] .studio-hero-button {
 .hero-copy h1,
 .section-title h2,
 .about-copy h2,
-.worked-with-heading h2,
 .contact-copy h2,
 .project-content h3,
 .service-card h3,
@@ -2636,8 +2553,7 @@ html[lang="ar"] .studio-hero-button {
   }
 
   .about-copy h2,
-  .contact-copy h2,
-  .worked-with-heading {
+  .contact-copy h2 {
     text-align: center;
   }
 
@@ -2809,32 +2725,6 @@ html[lang="ar"] .studio-hero-button {
 
   .skill-name {
     font-size: 0.78rem;
-  }
-
-  .worked-with {
-    padding-block: 36px;
-  }
-
-  .worked-with .shell {
-    gap: 16px;
-  }
-
-  .worked-with-heading h2 {
-    font-size: 1.3rem;
-  }
-
-  .logo-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
-  }
-
-  .company-logo {
-    min-height: 76px;
-    padding: 12px;
-  }
-
-  .company-logo img {
-    height: 40px;
   }
 
   .experience-grid,
@@ -3200,6 +3090,122 @@ html[lang="ar"] .studio-hero-button {
   }
 }
 
+/* Trusted brands */
+.trusted-brands {
+  --trusted-brand-gap: clamp(24px, 3vw, 44px);
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding-block: 16px;
+  background: var(--surface);
+}
+
+.trusted-brands-marquee {
+  width: 100%;
+  overflow: hidden;
+  direction: ltr;
+  mask-image: linear-gradient(90deg, transparent, black 4%, black 96%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 4%, black 96%, transparent);
+}
+
+.trusted-brands-track {
+  display: flex;
+  width: max-content;
+  transform: translate3d(0, 0, 0);
+  animation: trusted-brands-scroll 38s linear infinite;
+  will-change: transform;
+}
+
+.trusted-brands-logo-group {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: var(--trusted-brand-gap);
+  margin: 0;
+  padding: 0 var(--trusted-brand-gap) 0 0;
+  list-style: none;
+}
+
+.trusted-brand-item {
+  display: flex;
+  width: clamp(116px, 10vw, 140px);
+  height: 56px;
+  flex: 0 0 clamp(116px, 10vw, 140px);
+  align-items: center;
+  justify-content: center;
+}
+
+.trusted-brand-item-lp-logo,
+.trusted-brand-item-loc-more,
+.trusted-brand-item-tactful-ai,
+.trusted-brand-item-trendscape-agency {
+  width: clamp(156px, 14vw, 196px);
+  flex-basis: clamp(156px, 14vw, 196px);
+}
+
+.trusted-brand-item-adsamy,
+.trusted-brand-item-virallap {
+  width: clamp(64px, 6vw, 76px);
+  flex-basis: clamp(64px, 6vw, 76px);
+}
+
+.trusted-brand-logo {
+  width: 100%;
+  height: 48px;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+html[dir="rtl"] .trusted-brands-track {
+  animation-direction: reverse;
+}
+
+@keyframes trusted-brands-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (max-width: 767px) {
+  .trusted-brands {
+    --trusted-brand-gap: clamp(20px, 6vw, 28px);
+    padding-block: 28px;
+  }
+
+  .trusted-brands-marquee {
+    mask-image: linear-gradient(90deg, transparent, black 3%, black 97%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, black 3%, black 97%, transparent);
+  }
+
+  .trusted-brand-item {
+    width: clamp(100px, 28vw, 112px);
+    height: 52px;
+    flex-basis: clamp(100px, 28vw, 112px);
+  }
+
+  .trusted-brand-item-lp-logo,
+  .trusted-brand-item-loc-more,
+  .trusted-brand-item-tactful-ai,
+  .trusted-brand-item-trendscape-agency {
+    width: clamp(136px, 40vw, 156px);
+    flex-basis: clamp(136px, 40vw, 156px);
+  }
+
+  .trusted-brand-item-adsamy,
+  .trusted-brand-item-virallap {
+    width: 60px;
+    flex-basis: 60px;
+  }
+
+  .trusted-brand-logo {
+    height: 44px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -3219,6 +3225,45 @@ html[lang="ar"] .studio-hero-button {
   .service-card:hover,
   .project-card:hover .project-thumb img {
     transform: none;
+  }
+
+  .trusted-brands-marquee {
+    overflow: visible;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+
+  .trusted-brands-track {
+    width: 100%;
+    animation: none !important;
+    transform: none !important;
+    will-change: auto;
+  }
+
+  .trusted-brands-logo-group {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+    gap: clamp(20px, 3vw, 36px);
+    padding-inline: clamp(20px, 5vw, 72px);
+  }
+
+  .trusted-brands-logo-group[aria-hidden="true"] {
+    display: none;
+  }
+
+  .trusted-brands-logo-group .trusted-brand-item {
+    width: 100%;
+    height: 56px;
+    flex-basis: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) and (max-width: 767px) {
+  .trusted-brands-logo-group {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 32px;
+    padding-inline: 24px;
   }
 }
 

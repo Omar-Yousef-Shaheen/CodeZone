@@ -52,6 +52,9 @@ export type Dictionary = {
       { readonly value: string; readonly label: string },
     ];
   };
+  readonly trustedBrands: {
+    readonly logoListLabel: string;
+  };
   readonly navigation: {
     readonly home: string;
     readonly about: string;

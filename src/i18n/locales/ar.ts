@@ -54,6 +54,9 @@ export const ar = {
       { value: "2+", label: "سنوات من الخبرة" },
     ],
   },
+  trustedBrands: {
+    logoListLabel: "العلامات والفرق التي عملت مع CZ Pixel",
+  },
   navigation: {
     home: "الرئيسية",
     about: "من نحن",

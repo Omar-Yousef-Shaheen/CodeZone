@@ -20,9 +20,15 @@ export type ProjectPlatform = "WordPress / WooCommerce" | "Shopify";
 export type ProjectRole = "Full Build" | "Development & Improvements";
 export type ProjectSiteType = "Ecommerce" | "Portfolio Website";
 export type ProjectSource =
+  | "CZ Pixel Project"
   | "Direct Freelance Project"
   | "Built while working with Trendscape Agency"
   | "Built while working with Tawasol365";
+
+export type LocalizedProjectDescription = {
+  readonly en: string;
+  readonly ar: string;
+};
 
 export type Project = {
   title: string;
@@ -36,6 +42,9 @@ export type Project = {
   projectType: string;
   contribution: string;
   source: ProjectSource;
+  categoryLabel?: string;
+  localizedDescription?: LocalizedProjectDescription;
+  services?: readonly string[];
 };
 
 type ProjectSeed = Omit<
@@ -43,6 +52,7 @@ type ProjectSeed = Omit<
   "image" | "role" | "source" | "siteType" | "projectType" | "contribution"
 > & {
   imageFile: string;
+  role?: ProjectRole;
   siteType?: ProjectSiteType;
   projectType?: string;
   contribution?: string;
@@ -73,7 +83,97 @@ const directFreelanceProjects = new Set([
 
 const tawasolProjects = new Set(["SquaresDev", "Tawasol 365", "Ventures Business Academy"]);
 
+const czPixelProjects = new Set(["KGS Hospital", "Abu Rwes", "Ziara Online", "Kaza Moda"]);
+
 const projectSeeds: ProjectSeed[] = [
+  {
+    title: "KGS Hospital",
+    description: "Complete WordPress website development from planning to launch, including website structure, responsive implementation, and performance optimization.",
+    localizedDescription: {
+      en: "Complete WordPress website development from planning to launch, including website structure, responsive implementation, and performance optimization.",
+      ar: "تطوير موقع WordPress بالكامل بداية من التخطيط والتنفيذ وحتى الإطلاق، مع تجهيز الهيكل، التصميم المتجاوب، وتحسين الأداء.",
+    },
+    imageFile: "kgs-egypt.jpg",
+    liveDemoUrl: "https://kgs-eg.com/",
+    category: "wordpress-woocommerce",
+    categoryLabel: "WordPress Development",
+    platform: "WordPress / WooCommerce",
+    siteType: "Portfolio Website",
+    projectType: "Full Website Development",
+    contribution: "WordPress, Website Development, Responsive Design, Performance Optimization",
+    services: [
+      "WordPress",
+      "Website Development",
+      "Responsive Design",
+      "Performance Optimization",
+    ],
+  },
+  {
+    title: "Abu Rwes",
+    description: "Shopify store customization and theme development, rebuilding sections, improving user experience, and preparing the store for better conversion.",
+    localizedDescription: {
+      en: "Shopify store customization and theme development, rebuilding sections, improving user experience, and preparing the store for better conversion.",
+      ar: "تخصيص وتطوير متجر Shopify من خلال تعديل وإعادة بناء أجزاء الثيم، تحسين تجربة المستخدم، وتجهيز المتجر بشكل أفضل للبيع.",
+    },
+    imageFile: "abu-rwes.jpg",
+    liveDemoUrl: "https://urwes.com/",
+    category: "shopify",
+    categoryLabel: "Shopify Development",
+    platform: "Shopify",
+    role: "Development & Improvements",
+    projectType: "Shopify Store Development & Theme Customization",
+    contribution: "Shopify, Theme Customization, E-commerce Development, UX Improvements",
+    services: [
+      "Shopify",
+      "Theme Customization",
+      "E-commerce Development",
+      "UX Improvements",
+    ],
+  },
+  {
+    title: "Ziara Online",
+    description: "Shopify theme optimization project focused on improving performance, fixing theme issues, and enhancing the overall shopping experience.",
+    localizedDescription: {
+      en: "Shopify theme optimization project focused on improving performance, fixing theme issues, and enhancing the overall shopping experience.",
+      ar: "تحسين متجر Shopify من خلال معالجة مشاكل الثيم، رفع الأداء، وتحسين تجربة الشراء.",
+    },
+    imageFile: "ziara-online.jpg",
+    liveDemoUrl: "https://ziaraonline.com/",
+    category: "shopify",
+    categoryLabel: "Shopify Optimization",
+    platform: "Shopify",
+    role: "Development & Improvements",
+    projectType: "Shopify Theme Improvement",
+    contribution: "Shopify, Performance Optimization, Theme Fixes, Frontend Improvements",
+    services: [
+      "Shopify",
+      "Performance Optimization",
+      "Theme Fixes",
+      "Frontend Improvements",
+    ],
+  },
+  {
+    title: "Kaza Moda",
+    description: "Shopify theme troubleshooting and customization, resolving header and footer issues and improving the overall storefront experience.",
+    localizedDescription: {
+      en: "Shopify theme troubleshooting and customization, resolving header and footer issues and improving the overall storefront experience.",
+      ar: "معالجة وتطوير ثيم Shopify من خلال حل مشاكل الهيدر والفوتر وتحسين تجربة المتجر بالكامل.",
+    },
+    imageFile: "kaza-moda.jpg",
+    liveDemoUrl: "https://kazamoda.com/",
+    category: "shopify",
+    categoryLabel: "Shopify Theme Customization",
+    platform: "Shopify",
+    role: "Development & Improvements",
+    projectType: "Shopify Bug Fixing & Improvements",
+    contribution: "Shopify, Theme Development, Bug Fixing, Frontend Improvements",
+    services: [
+      "Shopify",
+      "Theme Development",
+      "Bug Fixing",
+      "Frontend Improvements",
+    ],
+  },
   {
     title: "Homers EG",
     description: "A fashion storefront with a dark, product-led presentation, organized category browsing, and a focused mobile shopping flow.",
@@ -470,17 +570,19 @@ export const projects: Project[] = projectSeeds.map((project) => {
     ...project,
     image: imageFor(project.imageFile),
     siteType: project.siteType ?? (isPortfolio ? "Portfolio Website" : "Ecommerce"),
-    role: isImprovement ? "Development & Improvements" : "Full Build",
+    role: project.role ?? (isImprovement ? "Development & Improvements" : "Full Build"),
     projectType: project.projectType ?? (isPortfolio ? "Portfolio Website" : "E-commerce Website"),
     contribution: project.contribution ?? (
       isImprovement
         ? "Website Development, UI Improvements & Performance Enhancements"
         : "Full Website Development"
     ),
-    source: directFreelanceProjects.has(project.title)
-      ? "Direct Freelance Project"
-      : tawasolProjects.has(project.title)
-        ? "Built while working with Tawasol365"
-        : "Built while working with Trendscape Agency",
+    source: czPixelProjects.has(project.title)
+      ? "CZ Pixel Project"
+      : directFreelanceProjects.has(project.title)
+        ? "Direct Freelance Project"
+        : tawasolProjects.has(project.title)
+          ? "Built while working with Tawasol365"
+          : "Built while working with Trendscape Agency",
   };
 });

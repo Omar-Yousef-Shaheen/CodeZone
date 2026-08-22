@@ -8,7 +8,7 @@ import Navbar from "./components/Navbar";
 import Process from "./components/Process";
 import Projects from "./components/Projects";
 import Services from "./components/Services";
-import WorkedWith from "./components/WorkedWith";
+import TrustedBrands from "./components/TrustedBrands";
 import { handleSectionNavigation, initializeRootScroll } from "./utils/sectionNavigation";
 
 export default function App() {
@@ -28,8 +28,8 @@ export default function App() {
       <Navbar />
       <main id="main-content" tabIndex={-1}>
         <Hero />
+        <TrustedBrands />
         <About />
-        <WorkedWith />
         <Experience />
         <Projects />
         <Services />

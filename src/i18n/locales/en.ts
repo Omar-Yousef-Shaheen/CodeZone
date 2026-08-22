@@ -54,6 +54,9 @@ export const en = {
       { value: "2+", label: "Years of Experience" },
     ],
   },
+  trustedBrands: {
+    logoListLabel: "Brands and teams that have worked with CZ Pixel",
+  },
   navigation: {
     home: "Home",
     about: "About",
