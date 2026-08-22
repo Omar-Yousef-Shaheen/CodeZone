@@ -1,4 +1,4 @@
-import horizontalLogo from "../assets/images/ChatGPT Image Aug 17, 2026, 07_41_43 AM (2).png";
+import horizontalLogo from "../assets/images/CZ-Logo.png";
 import markLogo from "../assets/images/ChatGPT Image Aug 17, 2026, 07_41_43 AM (1).png";
 import { useI18n } from "../i18n/useI18n";
 
@@ -10,8 +10,8 @@ type LogoProps = {
 const logoAssets = {
   horizontal: {
     src: horizontalLogo,
-    width: 2172,
-    height: 724,
+    width: 1990,
+    height: 627,
   },
   mark: {
     src: markLogo,

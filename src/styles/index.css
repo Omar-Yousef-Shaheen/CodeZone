@@ -275,13 +275,18 @@ h3 {
 
 /* Phase 2: CZ Pixel Navbar */
 .site-header {
-  position: sticky;
+  position: fixed;
+  inset-inline: 0;
   top: 0;
   z-index: 50;
   min-height: var(--header-height);
   border-bottom: 1px solid var(--line);
   background: var(--brand-off-white);
   box-shadow: 0 8px 22px rgba(11, 31, 51, 0.05);
+}
+
+.site-header + main {
+  padding-top: var(--header-height);
 }
 
 .nav-shell {
@@ -853,7 +858,7 @@ html[lang="ar"] .studio-hero-button {
   }
 
   .studio-hero-inner {
-    gap: 22px;
+    gap: 10px;
     padding-block: 32px 16px;
   }
 
@@ -863,7 +868,8 @@ html[lang="ar"] .studio-hero-button {
   }
 
   .studio-hero-heading {
-    font-size: clamp(1.75rem, 8vw, 2.25rem);
+    font-size: clamp(1.75rem, 7vw, 2.25rem);
+    letter-spacing: normal;
     line-height: 1.15;
   }
 
