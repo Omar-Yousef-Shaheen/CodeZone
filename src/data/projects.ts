@@ -94,7 +94,7 @@ const projectSeeds: ProjectSeed[] = [
       ar: "تطوير موقع WordPress بالكامل بداية من التخطيط والتنفيذ وحتى الإطلاق، مع تجهيز الهيكل، التصميم المتجاوب، وتحسين الأداء.",
     },
     imageFile: "kgs-egypt.jpg",
-    liveDemoUrl: "https://kgs-eg.com/",
+    liveDemoUrl: "https://kgs-egy.com/",
     category: "wordpress-woocommerce",
     categoryLabel: "WordPress Development",
     platform: "WordPress / WooCommerce",
