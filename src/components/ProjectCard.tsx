@@ -1,20 +1,26 @@
 import { ArrowUpRight } from "lucide-react";
 import type { Project } from "../data/projects";
+import { useI18n } from "../i18n/useI18n";
 import { PlatformIcon } from "./Icon";
 
 export default function ProjectCard({ project }: { project: Project }) {
-  const platformLabel = project.platform === "Shopify"
-    ? "Shopify"
-    : project.siteType === "Portfolio Website"
-      ? "WordPress"
-      : "WordPress / WooCommerce";
+  const { locale } = useI18n();
+  const title = project.localizedTitle?.[locale] ?? project.title;
+  const description = project.localizedDescription?.[locale] ?? project.description;
+  const platformLabel = project.localizedPlatformLabel?.[locale] ?? (
+    project.platform === "Shopify"
+      ? "Shopify"
+      : project.siteType === "Portfolio Website"
+        ? "WordPress"
+        : "WordPress / WooCommerce"
+  );
 
   return (
     <article className="project-card">
       <div className="project-thumb">
         <img
           src={project.image}
-          alt={`${project.title} website homepage preview`}
+          alt={`${title} website homepage preview`}
           width="640"
           height="400"
           loading="lazy"
@@ -24,17 +30,17 @@ export default function ProjectCard({ project }: { project: Project }) {
       <div className="project-content">
         <div className="project-badges">
           <span className="platform-badge"><PlatformIcon platform={project.platform} />{platformLabel}</span>
-          <span className="role-badge">{project.role}</span>
+          {project.role ? <span className="role-badge">{project.role}</span> : null}
         </div>
-        <h3>{project.title}</h3>
-        <p className="project-source">{project.source}</p>
-        <p className="project-description">{project.description}</p>
+        <h3>{title}</h3>
+        {project.source ? <p className="project-source">{project.source}</p> : null}
+        <p className="project-description">{description}</p>
         <a
           className="project-cta"
           href={project.liveDemoUrl}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`Visit ${project.title} website (opens in a new tab)`}
+          aria-label={`Visit ${title} website (opens in a new tab)`}
         >
           Visit Website
           <ArrowUpRight aria-hidden="true" />

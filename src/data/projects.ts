@@ -25,7 +25,7 @@ export type ProjectSource =
   | "Built while working with Trendscape Agency"
   | "Built while working with Tawasol365";
 
-export type LocalizedProjectDescription = {
+export type LocalizedProjectText = {
   readonly en: string;
   readonly ar: string;
 };
@@ -38,12 +38,14 @@ export type Project = {
   category: ProjectCategory;
   platform: ProjectPlatform;
   siteType: ProjectSiteType;
-  role: ProjectRole;
-  projectType: string;
-  contribution: string;
-  source: ProjectSource;
+  role?: ProjectRole;
+  projectType?: string;
+  contribution?: string;
+  source?: ProjectSource;
   categoryLabel?: string;
-  localizedDescription?: LocalizedProjectDescription;
+  localizedTitle?: LocalizedProjectText;
+  localizedDescription?: LocalizedProjectText;
+  localizedPlatformLabel?: LocalizedProjectText;
   services?: readonly string[];
 };
 
@@ -56,6 +58,8 @@ type ProjectSeed = Omit<
   siteType?: ProjectSiteType;
   projectType?: string;
   contribution?: string;
+  source?: ProjectSource;
+  inferMissingMetadata?: boolean;
 };
 
 const imageFor = (fileName: string) => {
@@ -173,6 +177,48 @@ const projectSeeds: ProjectSeed[] = [
       "Bug Fixing",
       "Frontend Improvements",
     ],
+  },
+  {
+    title: "Aro Beauty",
+    localizedTitle: {
+      en: "Aro Beauty",
+      ar: "أرو بيوتي",
+    },
+    description: "A Shopify beauty and hair-care store.",
+    localizedDescription: {
+      en: "A Shopify beauty and hair-care store.",
+      ar: "متجر شوبيفاي متخصص في منتجات العناية والجمال والشعر.",
+    },
+    imageFile: "arobeauty.jpg",
+    liveDemoUrl: "https://arobeauty.site/",
+    category: "shopify",
+    platform: "Shopify",
+    localizedPlatformLabel: {
+      en: "Shopify",
+      ar: "شوبيفاي",
+    },
+    inferMissingMetadata: false,
+  },
+  {
+    title: "Safisra",
+    localizedTitle: {
+      en: "Safisra",
+      ar: "صافيسرا",
+    },
+    description: "A Shopify store for modest fashion and lifestyle products.",
+    localizedDescription: {
+      en: "A Shopify store for modest fashion and lifestyle products.",
+      ar: "متجر شوبيفاي للأزياء المحتشمة ومنتجات أسلوب الحياة.",
+    },
+    imageFile: "safisra.jpg",
+    liveDemoUrl: "https://safisra.co.uk/",
+    category: "shopify",
+    platform: "Shopify",
+    localizedPlatformLabel: {
+      en: "Shopify",
+      ar: "شوبيفاي",
+    },
+    inferMissingMetadata: false,
   },
   {
     title: "Homers EG",
@@ -556,7 +602,8 @@ const projectSeeds: ProjectSeed[] = [
 
 const normalizedProjectTitles = new Set<string>();
 
-export const projects: Project[] = projectSeeds.map((project) => {
+export const projects: Project[] = projectSeeds.map((projectSeed) => {
+  const { imageFile, inferMissingMetadata = true, ...project } = projectSeed;
   const normalizedTitle = project.title.trim().toLocaleLowerCase("en");
   if (normalizedProjectTitles.has(normalizedTitle)) {
     throw new Error(`Duplicate project title: ${project.title}`);
@@ -568,21 +615,39 @@ export const projects: Project[] = projectSeeds.map((project) => {
 
   return {
     ...project,
-    image: imageFor(project.imageFile),
+    image: imageFor(imageFile),
     siteType: project.siteType ?? (isPortfolio ? "Portfolio Website" : "Ecommerce"),
-    role: project.role ?? (isImprovement ? "Development & Improvements" : "Full Build"),
-    projectType: project.projectType ?? (isPortfolio ? "Portfolio Website" : "E-commerce Website"),
-    contribution: project.contribution ?? (
-      isImprovement
-        ? "Website Development, UI Improvements & Performance Enhancements"
-        : "Full Website Development"
+    role: project.role ?? (
+      inferMissingMetadata
+        ? isImprovement
+          ? "Development & Improvements"
+          : "Full Build"
+        : undefined
     ),
-    source: czPixelProjects.has(project.title)
-      ? "CZ Pixel Project"
-      : directFreelanceProjects.has(project.title)
-        ? "Direct Freelance Project"
-        : tawasolProjects.has(project.title)
-          ? "Built while working with Tawasol365"
-          : "Built while working with Trendscape Agency",
+    projectType: project.projectType ?? (
+      inferMissingMetadata
+        ? isPortfolio
+          ? "Portfolio Website"
+          : "E-commerce Website"
+        : undefined
+    ),
+    contribution: project.contribution ?? (
+      inferMissingMetadata
+        ? isImprovement
+          ? "Website Development, UI Improvements & Performance Enhancements"
+          : "Full Website Development"
+        : undefined
+    ),
+    source: project.source ?? (
+      inferMissingMetadata
+        ? czPixelProjects.has(project.title)
+          ? "CZ Pixel Project"
+          : directFreelanceProjects.has(project.title)
+            ? "Direct Freelance Project"
+            : tawasolProjects.has(project.title)
+              ? "Built while working with Tawasol365"
+              : "Built while working with Trendscape Agency"
+        : undefined
+    ),
   };
 });
