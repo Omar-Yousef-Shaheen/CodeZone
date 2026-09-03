@@ -1096,10 +1096,22 @@ html[lang="ar"] .studio-hero-button {
   font-size: 0.84rem;
 }
 
+.skill-name svg,
+.skill-name img {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
 .skill-name svg {
-  width: 18px;
-  height: 18px;
   color: var(--teal-600);
+}
+
+.skill-name img {
+  width: 30px;
+  height: 40px;
+  display: block;
+  object-fit: contain;
 }
 
 .skill-track {
